@@ -12,7 +12,8 @@
         <div class="container mx-auto flex justify-between items-center px-4">
             <a href="{{ route('landing') }}" class="text-2xl font-bold">TarDes</a>
             <nav class="space-x-4">
-                <a href="#features" class="hover:underline">Features</a>
+                <a href="{{ route('landing') }}" class="hover:underline">Beranda</a>
+                <a href="{{ route('operator.login') }}" class="hover:underline">Login</a>
                 <a href="#about" class="hover:underline">About</a>
                 <a href="#contact" class="hover:underline">Contact</a>
             </nav>
@@ -24,7 +25,7 @@
     <!-- Footer -->
     <footer class="bg-transparent py-6">
         <div class="container mx-auto text-center">
-            <p>&copy; {{ date('Y') }} YourBrand. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} TarDes. All rights reserved.</p>
         </div>
     </footer>
 </body>

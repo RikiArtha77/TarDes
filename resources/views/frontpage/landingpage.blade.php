@@ -6,7 +6,6 @@
           <h1 class="text-4xl sm:text-6xl font-extrabold mb-4">Selamat Datang di TarDes</h1>
           <p class="text-lg sm:text-2xl mb-8">"Mudah, Cepat, dan Transparan: Daftar Diri Anda Secara Online"</p>
           <a href="{{ route('formdaftar') }}" class="bg-white text-indigo-500 px-6 py-3 rounded-lg shadow-md hover:bg-indigo-100 transition">Daftar</a>
-          <a href="{{ route('formlogin') }}" class="bg-white text-indigo-500 px-6 py-3 rounded-lg shadow-md hover:bg-indigo-100 transition">Masuk</a>
       </div>
     </section>
 
@@ -25,7 +24,7 @@
               </div>
               <div class="p-6 bg-gray-100 rounded-lg shadow-md">
                   <h3 class="text-xl font-semibold mb-2">Transparan</h3>
-                  <p>Secure and robust platforms for your business.</p>
+                  <p>Semua data warga desa tercatat dengan jelas dan dapat diakses oleh pihak berwenang sesuai izin. Status pendaftaran dapat dipantau secara langsung.</p>
               </div>
           </div>
       </div>
