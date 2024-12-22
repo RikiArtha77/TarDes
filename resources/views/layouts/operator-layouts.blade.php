@@ -1,19 +1,3 @@
-<?php
-// Contoh data pengguna
-$users = [
-    [
-        'name' => 'John Doe',
-        'email' => 'john@example.com',
-        'title' => 'Software Engineer',
-        'status' => 'Active',
-        'role' => 'Owner',
-        'image' => 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-    ],
-    // Tambahkan data pengguna lainnya di sini
-];
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +6,8 @@ $users = [
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Daftar Keluarga</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/44.1.0/ckeditor5.css" />
+    <script src="//cdn.ckeditor.com/4.25.0-lts/basic/ckeditor.js"></script>
 </head>
 <body>
     <div>
@@ -56,7 +42,7 @@ $users = [
                 </a>
     
                 <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
-                    href="">
+                    href="{{ route('operator.create') }}">
                     <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

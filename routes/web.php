@@ -25,11 +25,13 @@ Route::get('/formdaftar', [LandingController::class,'formdaftar'])->name('formda
 Route::get('Hub', [KontakController::class,'index'])->name('Hub');
 Route::get('/Testing', [LandingController::class,'Testing'])->name('Testing');
 
+
 Route::get('/operator/login', [OperatorAuthController::class, 'showLoginForm'])->name('operator.LoginForm');
 Route::post('/operator/login', [OperatorAuthController::class, 'login'])->name('operator.login');
 
 Route::middleware([OperatorMiddleware::class])->group(function () {
     Route::get('/operator/dashboard', [OperatorController::class, 'index'])->name('operator.daftarkeluarga');
+    Route::resource('operator', OperatorController::class);
 });
 
 Route::get('/dashboard', function () {

@@ -13,7 +13,7 @@
                     <h1 class="text-2xl font-bold text-center mb-4 text-gray-600">Selamat Datang Kembali!</h1>
                     <hr>
                 <div class="flex items-center border-2 py-2 px-3 rounded-md mb-4">
-                    <label for="username" class="block text-gray-700">Email</label>
+                    <label for="username" class="block text-gray-700">Username</label>
                     <input type="text" name="username" id="username" class="w-full px-4 py-2 border rounded-lg" required>
                 </div>
                 <div class="flex items-center border-2 py-2 px-3 rounded-md">

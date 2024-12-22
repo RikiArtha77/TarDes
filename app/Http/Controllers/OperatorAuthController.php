@@ -11,7 +11,7 @@ class OperatorAuthController extends Controller
 {
     public function showLoginForm()
     {
-        return view('operator.LoginForm');
+        return view('operatorr.LoginForm');
     }
 
     public function login(Request $request)
@@ -23,7 +23,7 @@ class OperatorAuthController extends Controller
 
         // Authenticate using guard 'operator'
         if (Auth::guard('operator')->attempt($request->only('username', 'password'))) {
-            return redirect()->route('operator.daftarkeluarga')->with('success', 'Login berhasil!');
+            return redirect()->route('operatorr.daftarkeluarga')->with('success', 'Login berhasil!');
         }
 
         return back()->withErrors(['login' => 'Username atau password salah.']);
@@ -32,6 +32,6 @@ class OperatorAuthController extends Controller
     public function logout()
     {
         Auth::guard('operator')->logout();
-        return redirect()->route('operator.LoginForm')->with('success', 'Logout berhasil!');
+        return redirect()->route('operatorr.LoginForm')->with('success', 'Logout berhasil!');
     }
 }
