@@ -13,7 +13,7 @@
             <a href="{{ route('landing') }}" class="text-2xl font-bold">TarDes</a>
             <nav class="space-x-4">
                 <a href="{{ route('landing') }}" class="hover:underline">Beranda</a>
-                <a href="{{ route('operator.login') }}" class="hover:underline">Login</a>
+                <a href="{{ route('operator.LoginForm') }}" class="hover:underline">Login</a>
                 <a href="#about" class="hover:underline">About</a>
                 <a href="#contact" class="hover:underline">Contact</a>
             </nav>
