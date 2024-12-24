@@ -176,12 +176,12 @@
             </form>
         </div>
     </div>
-    <script src="//cdn.ckeditor.com/4.25.0-lts/basic/ckeditor.js"></script>
+    <script src="ckeditor/ckeditor.js"></script>
     <script>
         CKEDITOR.replace('alamat', {
-            toolbar: [
-                { name: 'basicstyles', items: ['Bold', 'Italic'] }
-            ]
-        });
+    toolbar: [
+        { name: 'basicstyles', items: ['Bold', 'Italic'] }
+    ]
+    });
     </script>
 </x-operator-layouts>

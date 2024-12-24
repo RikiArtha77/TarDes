@@ -7,7 +7,7 @@
     <title>Daftar Keluarga</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/44.1.0/ckeditor5.css" />
-    <script src="//cdn.ckeditor.com/4.25.0-lts/basic/ckeditor.js"></script>
+    <script src="ckeditor/ckeditor.js"></script>
 </head>
 <body>
     <div>

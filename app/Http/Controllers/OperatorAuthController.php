@@ -23,7 +23,7 @@ class OperatorAuthController extends Controller
 
         // Authenticate using guard 'operator'
         if (Auth::guard('operator')->attempt($request->only('username', 'password'))) {
-            return redirect()->route('operatorr.daftarkeluarga')->with('success', 'Login berhasil!');
+            return redirect()->route('operator.daftarkeluarga')->with('success', 'Login berhasil!');
         }
 
         return back()->withErrors(['login' => 'Username atau password salah.']);
