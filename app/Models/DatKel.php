@@ -10,20 +10,31 @@ class DatKel extends Model
 {
     use HasFactory;
 
+    // Optional: If your table name follows Laravel conventions, this is not needed
     protected $table = "datkel";
+
+    // Optional: Laravel uses 'id' as the primary key by default. You only need to specify it if it's different
     public $primaryKey = 'datkel_id';
 
+    // Mass assignable attributes
     protected $fillable = [
-        'nama_kpl', 'NIK', 'Pekerjaan', 'No_KK', 'jmh_anggota', 'alamat', 'no_rumah', 'komunitas_id','koor_geoloc', 'bantuan', 'gambar_rumah', 'gambar_kk',
+        'komunitas_id', 'nama_kpl', 'NIK', 'Pekerjaan', 'No_KK', 'jmh_anggota', 'alamat', 'no_rumah',
+        'koor_geoloc', 'bantuan', 'gambar_rumah', 'gambar_kk',
     ];
 
-    // Relasi dengan model Komunitas
+    // Relationships
     public function komunitas()
     {
         return $this->belongsTo(Komunitas::class, 'komunitas_id', 'komunitas_id');
     }
 
+    // Casts
     protected $casts = [
-        'koor_geoloc' => 'point', // Mengonversi field koor_geoloc menjadi objek Point
+        'koor_geoloc' => 'point', // Assuming this is a MySQL spatial column
+        // If you have date columns, you could also cast them:
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
+
+    // Optional: Add custom methods or attributes as necessary
 }

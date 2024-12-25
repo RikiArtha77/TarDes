@@ -44,43 +44,52 @@ class OperatorController extends Controller
         'NIK' => 'required',
         'Pekerjaan' => 'required',
         'No_KK' => 'required',
-        'jmh_anggota' => 'required',
+        'jmh_anggota' => 'required|numeric',  // Added numeric validation
         'alamat' => 'required',
-        'no_rumah' => 'required',
+        'no_rumah' => 'required|numeric',  // Added numeric validation
         'gambar_rumah' => 'required|mimes:png,jpg|max:1024',
         'gambar_kk' => 'required|mimes:png,jpg|max:1024',
         'latitude' => 'required|numeric',
         'longitude' => 'required|numeric',
-        'bantuan' => 'array',
-        'bantuan.*' => 'in:KIP,KIS,PBH,PKH',
+        'bantuan' => 'array|nullable',  // Make 'bantuan' optional
+        'bantuan.*' => 'in:KIP,KIS,PBH,PKH',  // Validate each item in 'bantuan' array
     ], $message);
 
     try {
-        
-        // Menangani upload gambar rumah
+        // Menangani upload gambar rumah jika ada
         if ($request->hasFile('gambar_rumah')) {
             $fileName = time() . $request->file('gambar_rumah')->getClientOriginalName();
             $path_rumah = $request->file('gambar_rumah')->storeAs('photos', $fileName, 'public');
             $validasi['gambar_rumah'] = $path_rumah;
         }
 
-        // Menangani upload gambar KK
+        // Menangani upload gambar KK jika ada
         if ($request->hasFile('gambar_kk')) {
             $fileName = time() . $request->file('gambar_kk')->getClientOriginalName();
             $path_kk = $request->file('gambar_kk')->storeAs('photos', $fileName, 'public');
             $validasi['gambar_kk'] = $path_kk;
         }
 
+        // Data CKEditor (Alamat)
+        $validasi['alamat'] = $request->input('alamat');
+
+        // Latitude dan Longitude
         $latitude = $request->input('latitude');
         $longitude = $request->input('longitude');
 
-        $datkel = DatKel::user();
+        // Membuat data DatKel baru
+        $datkel = new DatKel();
         $datkel->koor_geoloc = DB::raw("POINT($latitude, $longitude)");
-        $datkel->bantuan = implode(',', $request->bantuan);
+
+        // Simpan bantuan sebagai string jika ada
+        if ($request->has('bantuan')) {
+            $datkel->bantuan = implode(',', $request->input('bantuan'));
+        }
+
+        // Simpan ke database
+        $datkel->fill($validasi);
         $datkel->save();
 
-        // Simpan data ke database
-        $response = DatKel::create($validasi);
         // Redirect ke halaman operator setelah berhasil
         return redirect('operator')->with('success', 'Data berhasil disimpan!');
     } catch (\Exception $e) {
@@ -88,6 +97,7 @@ class OperatorController extends Controller
         return back()->withErrors(['error' => $e->getMessage()]);
     }
 }
+
 
     /**
      * Display the specified resource.
@@ -126,51 +136,54 @@ class OperatorController extends Controller
         'NIK' => 'required',
         'Pekerjaan' => 'required',
         'No_KK' => 'required',
-        'jmh_anggota' => 'required',
+        'jmh_anggota' => 'required|numeric', // Added numeric validation
         'alamat' => 'required',
-        'no_rumah' => 'required',
-        'gambar_rumah' => 'required|mimes:png,jpg|max:1024',
-        'gambar_kk' => 'required|mimes:png,jpg|max:1024',
+        'no_rumah' => 'required|numeric', // Added numeric validation
+        'gambar_rumah' => 'nullable|mimes:png,jpg|max:1024', // Nullable for existing file
+        'gambar_kk' => 'nullable|mimes:png,jpg|max:1024', // Nullable for existing file
         'latitude' => 'required|numeric',
         'longitude' => 'required|numeric',
-        'bantuan' => 'array',
-        'bantuan.*' => 'in:KIP,KIS,PBH,PKH',
+        'bantuan' => 'array|nullable', // Make sure 'bantuan' is optional
+        'bantuan.*' => 'in:KIP,KIS,PBH,PKH', // Validate each item in bantuan array
     ], $message);
 
     try {
-        
-        // Menangani upload gambar rumah
+        // Menangani upload gambar rumah jika ada
         if ($request->hasFile('gambar_rumah')) {
             $fileName = time() . $request->file('gambar_rumah')->getClientOriginalName();
             $path_rumah = $request->file('gambar_rumah')->storeAs('photos', $fileName, 'public');
             $validasi['gambar_rumah'] = $path_rumah;
         }
 
-        // Menangani upload gambar KK
+        // Menangani upload gambar KK jika ada
         if ($request->hasFile('gambar_kk')) {
             $fileName = time() . $request->file('gambar_kk')->getClientOriginalName();
             $path_kk = $request->file('gambar_kk')->storeAs('photos', $fileName, 'public');
             $validasi['gambar_kk'] = $path_kk;
         }
 
+        // Data CKEditor (Alamat)
+        $validasi['alamat'] = $request->input('alamat');
+
+        // Latitude dan Longitude
         $latitude = $request->input('latitude');
         $longitude = $request->input('longitude');
 
-        $datkel = DatKel::user();
+        // Update Koordinat Geolocation
+        $datkel = DatKel::findOrFail($id);
         $datkel->koor_geoloc = DB::raw("POINT($latitude, $longitude)");
+
+        // Simpan Bantuan sebagai string, jika ada
+        if ($request->has('bantuan')) {
+            $datkel->bantuan = implode(',', $request->input('bantuan'));
+        }
+
+        // Save geolocation and other data
         $datkel->save();
 
-        $datkel = DatKel::user();
-        $koor_geoloc = $datkel->koor_geoloc;
-        $bantuan = explode(',', $datkel->bantuan);
-        
+        // Update the DatKel model with the validated data
+        $datkel->update($validasi);
 
-        echo "Latitude: " . $koor_geoloc->getLat() . "<br>";
-        echo "Longitude: " . $koor_geoloc->getLng();
-
-
-        // Simpan data ke database
-        $response = DatKel::find($id)->update($validasi);
         // Redirect ke halaman operator setelah berhasil
         return redirect('operator')->with('success', 'Data berhasil disimpan!');
     } catch (\Exception $e) {
@@ -178,6 +191,7 @@ class OperatorController extends Controller
         return back()->withErrors(['error' => $e->getMessage()]);
     }
 }
+
 
     /**
      * Remove the specified resource from storage.

@@ -90,7 +90,7 @@
                         </div>
                         <div class="col-span-6 sm:col-span-3">
                             <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat</label>
-                            <textarea name="alamat" id="textdesk" cols="30" rows="2"
+                            <textarea name="alamat" id="alamat" cols="30" rows="2"
                             class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadowsm sm:text-sm border-gray-300 rounded-md">
                             {{(isset($datkel))?$datkel->alamat:old('alamat')}}
                             </textarea>
@@ -171,14 +171,14 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="latitude" class="block text-sm font-medium text-gray-700">Latitude</label>
-                                <input type="text" id="latitude" name="latitude" value="{{ old('latitude') }}" 
-                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                                <input type="text" id="latitude" name="latitude" value="{{ old('latitude', $datkel->latitude ?? '') }}" required
+                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
-                            
+
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="longitude" class="block text-sm font-medium text-gray-700">Longitude</label>
-                                <input type="text" id="longitude" name="longitude" value="{{ old('longitude') }}" 
-                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                                <input type="text" id="longitude" name="longitude" value="{{ old('longitude', $datkel->longitude ?? '') }}" required
+                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
                         
                             <!-- The button will span the full width of the grid on all screen sizes -->
@@ -196,8 +196,8 @@
 
                 <!-- Tombol Submit -->
                 <div class="px-4 py-3 bg-white text-right sm:px-6">
-                    <button 
-                        type="submit" class="inline-flex justify-center w-24 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md ring bg-indigo-600 hover:bg-indigo-700 text-white">Save
+                    <button type="submit" class="inline-flex justify-center w-24 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md ring bg-indigo-600 hover:bg-indigo-700 text-white">
+                        Save
                     </button>
                 </div>
             </form>
@@ -205,7 +205,7 @@
     </div>
     @section('scripts')
     <script>
-        CKEDITOR.replace('textdesk', {
+        CKEDITOR.replace('alamat', {
     toolbar: [
         { name: 'basicstyles', items: ['Bold', 'Italic']}
     ],
