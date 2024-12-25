@@ -21,7 +21,7 @@
                                 name="nama_kpl" 
                                 placeholder="Nama Kepala Keluarga" 
                                 required 
-                                value="{{ (isset($datkel)) ? $datkel->datkel_kpl : old('datkel_kpl') }}"
+                                value="{{ (isset($datkel)) ? $datkel->nama_kpl : old('nama_kpl') }}"
                                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                             >
                             @error('nama_kpl')
@@ -36,7 +36,7 @@
                                 name="NIK" 
                                 placeholder="NIK" 
                                 required 
-                                value="{{ (isset($datkel))? $datkel->NIK : old('NIK') }}"
+                                value="{{ (isset($datkel)) ? $datkel->NIK : old('NIK') }}"
                                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                             >
                             @error('NIK')
@@ -59,7 +59,7 @@
                             @enderror
                         </div>
                         <div class="col-span-6 sm:col-span-3">
-                            <label for="No_KK" class="block text-sm font-medium text-gray-700">Nama Kepala Keluarga</label>
+                            <label for="No_KK" class="block text-sm font-medium text-gray-700">No KK</label>
                             <input 
                                 type="text" 
                                 id="No_KK" 
@@ -76,7 +76,7 @@
                         <div class="col-span-6 sm:col-span-3">
                             <label for="jmh_anggota" class="block text-sm font-medium text-gray-700">Jumlah Anggota Keluarga</label>
                             <input 
-                                type="text" 
+                                type="number" 
                                 id="jmh_anggota" 
                                 name="jmh_anggota" 
                                 placeholder="Jumlah Anggota Keluarga" 
@@ -89,8 +89,8 @@
                             @enderror
                         </div>
                         <div class="col-span-6 sm:col-span-3">
-                            <label for="alamat" class="block text-sm font-medium text-gray-700">Deskripsi</label>
-                            <textarea name="alamat" id="alamat" cols="30" rows="2"
+                            <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat</label>
+                            <textarea name="alamat" id="textdesk" cols="30" rows="2"
                             class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadowsm sm:text-sm border-gray-300 rounded-md">
                             {{(isset($datkel))?$datkel->alamat:old('alamat')}}
                             </textarea>
@@ -101,7 +101,7 @@
                         <div class="col-span-6 sm:col-span-3">
                             <label for="no_rumah" class="block text-sm font-medium text-gray-700">No Rumah</label>
                             <input 
-                                type="text" 
+                                type="number" 
                                 id="no_rumah" 
                                 name="no_rumah" 
                                 placeholder="No Rumah" 
@@ -156,12 +156,39 @@
                             @enderror
                         </div>
                         <div class="col-span-6 sm:col-span-3">
-                            <label>Bantuan:</label><br>
-                            <input type="checkbox" name="bantuan[]" value="PKH"> PKH<br>
-                            <input type="checkbox" name="bantuan[]" value="KIP"> KIP<br>
-                            <input type="checkbox" name="bantuan[]" value="KIS"> KIS<br>
-                            <input type="checkbox" name="bantuan[]" value="PBI"> PBI<br>
-                        </div>
+                            <label for="kip">KIP</label>
+                            <input type="checkbox" name="bantuan[]" value="KIP" {{ in_array('KIP', old('bantuan', [])) ? 'checked' : '' }}><br>
+
+                            <label for="kis">KIS</label>
+                            <input type="checkbox" name="bantuan[]" value="KIS" {{ in_array('KIS', old('bantuan', [])) ? 'checked' : '' }}><br>
+
+                            <label for="pbh">PBH</label>
+                            <input type="checkbox" name="bantuan[]" value="PBH" {{ in_array('PBH', old('bantuan', [])) ? 'checked' : '' }}><br>
+
+                            <label for="pkh">PKH</label>
+                            <input type="checkbox" name="bantuan[]" value="PKH" {{ in_array('PKH', old('bantuan', [])) ? 'checked' : '' }}><br>
+                        </div>                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="col-span-6 sm:col-span-3">
+                                <label for="latitude" class="block text-sm font-medium text-gray-700">Latitude</label>
+                                <input type="text" id="latitude" name="latitude" value="{{ old('latitude') }}" 
+                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                            </div>
+                            
+                            <div class="col-span-6 sm:col-span-3">
+                                <label for="longitude" class="block text-sm font-medium text-gray-700">Longitude</label>
+                                <input type="text" id="longitude" name="longitude" value="{{ old('longitude') }}" 
+                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                            </div>
+                        
+                            <!-- The button will span the full width of the grid on all screen sizes -->
+                            <div class="col-span-2">
+                                <button type="button" id="get-location" 
+                                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md ring bg-indigo-600 hover:bg-indigo-700 text-white">
+                                    Get My Location
+                                </button>
+                            </div>
+                        </div>                                
                     </div>
                 </div>
 
@@ -176,12 +203,27 @@
             </form>
         </div>
     </div>
-    <script src="ckeditor/ckeditor.js"></script>
+    @section('scripts')
     <script>
-        CKEDITOR.replace('alamat', {
+        CKEDITOR.replace('textdesk', {
     toolbar: [
-        { name: 'basicstyles', items: ['Bold', 'Italic'] }
-    ]
-    });
+        { name: 'basicstyles', items: ['Bold', 'Italic']}
+    ],
+});
     </script>
+    <script>
+        document.getElementById('get-location').addEventListener('click', function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    document.getElementById('latitude').value = position.coords.latitude;
+                    document.getElementById('longitude').value = position.coords.longitude;
+                }, function(error) {
+                    alert('Geolocation error: ' + error.message);
+                });
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        });
+    </script>
+    @endsection
 </x-operator-layouts>

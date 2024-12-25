@@ -6,8 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Daftar Keluarga</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/44.1.0/ckeditor5.css" />
-    <script src="ckeditor/ckeditor.js"></script>
+    <script src="//cdn.ckeditor.com/4.21.0/basic/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 </head>
 <body>
     <div>
@@ -165,5 +167,6 @@
         </div>
     </div>
 </div>
+@yield('scripts')
 </body>
 </html>

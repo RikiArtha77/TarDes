@@ -114,8 +114,8 @@
                         
                                 <!-- Aksi -->
                                 <td class="px-6 py-4 text-sm font-medium leading-5 whitespace-no-wrap border-b border-gray-200">
-                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    <a href="#" class="ml-4 text-red-600 hover:text-red-900">Delete</a>
+                                    <a href="{{ route('operator.edit', $item->datkel_id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                    <a href="{{ route('operator.destroy', $item->datkel_id) }}" class="ml-4 text-red-600 hover:text-red-900" onclick="confirmDelete()">Delete</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -125,4 +125,44 @@
             </div>
         </div>
     </div>
+    @section('scripts')
+    <!-- SweetAlert JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Fungsi untuk konfirmasi penghapusan
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Kirim permintaan penghapusan ke server setelah konfirmasi
+                    window.location.href = '/keluarga/delete/' + id;  // Ganti dengan rute yang sesuai
+                } else {
+                    Swal.fire(
+                        'Cancelled',
+                        'Your data is safe :)',
+                        'error'
+                    )
+                }
+            });
+        }
+
+        // Menampilkan SweetAlert setelah berhasil menghapus data
+        @if(session('delete_success'))
+            Swal.fire({
+                title: 'Deleted!',
+                text: '{{ session('delete_success') }}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        @endif
+    </script>
+@endsection
 </x-operator-layouts>
