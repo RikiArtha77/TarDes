@@ -154,40 +154,27 @@
                             @error('gambar_kk')
                                 <div class="text-xs text-red-800">{{ $message }}</div>
                             @enderror
-                        </div>
-                        <div class="col-span-6 sm:col-span-3">
-                            <label for="kip">KIP</label>
-                            <input type="checkbox" name="bantuan[]" value="KIP" {{ in_array('KIP', old('bantuan', [])) ? 'checked' : '' }}><br>
-
-                            <label for="kis">KIS</label>
-                            <input type="checkbox" name="bantuan[]" value="KIS" {{ in_array('KIS', old('bantuan', [])) ? 'checked' : '' }}><br>
-
-                            <label for="pbh">PBH</label>
-                            <input type="checkbox" name="bantuan[]" value="PBH" {{ in_array('PBH', old('bantuan', [])) ? 'checked' : '' }}><br>
-
-                            <label for="pkh">PKH</label>
-                            <input type="checkbox" name="bantuan[]" value="PKH" {{ in_array('PKH', old('bantuan', [])) ? 'checked' : '' }}><br>
-                        </div>                        
+                        </div>                    
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="latitude" class="block text-sm font-medium text-gray-700">Latitude</label>
-                                <input type="text" id="latitude" name="latitude" value="{{ old('latitude', $datkel->latitude ?? '') }}" required
-                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" id="latitude" name="latitude" value="{{ (isset($datkel)) ? $datkel->latitude : old('latitude') }}" required
+                                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
-
+                            
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="longitude" class="block text-sm font-medium text-gray-700">Longitude</label>
-                                <input type="text" id="longitude" name="longitude" value="{{ old('longitude', $datkel->longitude ?? '') }}" required
-                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" id="longitude" name="longitude" value="{{ (isset($datkel)) ? $datkel->longitude : old('longitude') }}" required
+                                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
-                        
-                            <!-- The button will span the full width of the grid on all screen sizes -->
+                            
+                            <!-- Tombol untuk mengambil lokasi -->
                             <div class="col-span-2">
                                 <button type="button" id="get-location" 
-                                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md ring bg-indigo-600 hover:bg-indigo-700 text-white">
+                                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md ring bg-indigo-600 hover:bg-indigo-700 text-white">
                                     Get My Location
                                 </button>
-                            </div>
+                            </div>                            
                         </div>                                
                     </div>
                 </div>
@@ -204,13 +191,13 @@
         </div>
     </div>
     @section('scripts')
-    <script>
+    {{-- <script>
         CKEDITOR.replace('alamat', {
     toolbar: [
         { name: 'basicstyles', items: ['Bold', 'Italic']}
     ],
 });
-    </script>
+    </script> --}}
     <script>
         document.getElementById('get-location').addEventListener('click', function() {
             if (navigator.geolocation) {
