@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Daftar Keluarga</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="//cdn.ckeditor.com/4.21.0/basic/ckeditor.js"></script>

@@ -18,4 +18,15 @@ class DatKel extends Model
     {
         return $this->belongsTo(Komunitas::class, 'komunitas_id', 'komunitas_id');
     }
+    //  // Setter untuk menyimpan data checkbox sebagai JSON string
+    //  public function setBantuanAttribute($value)
+    //  {
+    //      $this->attributes['bantuan'] = json_encode($value);
+    //  }
+ 
+    //  // Getter untuk mengembalikan JSON string menjadi array
+    //  public function getBantuanAttribute($value)
+    //  {
+    //      return json_decode($value, true);
+    //  }
 }

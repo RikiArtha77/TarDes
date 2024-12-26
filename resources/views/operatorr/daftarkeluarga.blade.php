@@ -115,7 +115,7 @@
                                 <!-- Aksi -->
                                 <td class="px-6 py-4 text-sm font-medium leading-5 whitespace-no-wrap border-b border-gray-200">
                                     <a href="{{ route('operator.edit', $item->datkel_id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    <a href="{{ route('operator.destroy', $item->datkel_id) }}" class="ml-4 text-red-600 hover:text-red-900" onclick="confirmDelete()">Delete</a>
+                                    <a href="javascript:void(0);" class="ml-4 text-red-600 hover:text-red-900" onclick="confirmDelete({{ $item->datkel_id }})">Delete</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -130,39 +130,61 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        // Fungsi untuk konfirmasi penghapusan
+        // Function for confirmation and deleting the item
         function confirmDelete(id) {
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: 'Apakah Anda yakin?',
+                text: "Data ini tidak bisa dikembalikan setelah dihapus!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Tidak, batalkan!',
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Kirim permintaan penghapusan ke server setelah konfirmasi
-                    window.location.href = '/keluarga/delete/' + id;  // Ganti dengan rute yang sesuai
+                    // Send DELETE request using Fetch API
+                    fetch(`/operator/${id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire(
+                                'Dihapus!',
+                                data.message,
+                                'success'
+                            ).then(() => {
+                                // Reload the page to reflect the deletion
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire(
+                                'Gagal!',
+                                'Terjadi masalah saat menghapus data.',
+                                'error'
+                            );
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire(
+                            'Gagal!',
+                            'Terjadi kesalahan saat mengirim permintaan.',
+                            'error'
+                        );
+                    });
                 } else {
                     Swal.fire(
-                        'Cancelled',
-                        'Your data is safe :)',
-                        'error'
-                    )
+                        'Dibatalkan',
+                        'Data Anda aman :)',
+                        'info'
+                    );
                 }
             });
         }
-
-        // Menampilkan SweetAlert setelah berhasil menghapus data
-        @if(session('delete_success'))
-            Swal.fire({
-                title: 'Deleted!',
-                text: '{{ session('delete_success') }}',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-        @endif
     </script>
 @endsection
 </x-operator-layouts>

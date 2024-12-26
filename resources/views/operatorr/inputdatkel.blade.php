@@ -191,13 +191,13 @@
         </div>
     </div>
     @section('scripts')
-    {{-- <script>
+    <script>
         CKEDITOR.replace('alamat', {
     toolbar: [
         { name: 'basicstyles', items: ['Bold', 'Italic']}
-    ],
-});
-    </script> --}}
+        ],
+    });
+    </script>
     <script>
         document.getElementById('get-location').addEventListener('click', function() {
             if (navigator.geolocation) {
