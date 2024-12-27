@@ -15,7 +15,8 @@ class OperatorController extends Controller
      */
     public function index(){
         $datkel=DatKel::all();
-        return view('operatorr.daftarkeluarga', compact('datkel'));
+        $jumlahKeluarga = $datkel->count();
+        return view('operatorr.daftarkeluarga', compact('datkel', 'jumlahKeluarga'));
     }
 
     /**
@@ -141,7 +142,7 @@ class OperatorController extends Controller
         }
 
         // Simpan data ke database
-        $response = DatKel::create($validasi);
+        $response = DatKel::find($id)->update($validasi);
 
         return redirect('operator')->with('success', 'Data berhasil disimpan!');
     } catch (\Exception $e) {

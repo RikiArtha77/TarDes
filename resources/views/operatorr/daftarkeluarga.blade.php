@@ -31,7 +31,7 @@
                         </div>
 
                         <div class="mx-5">
-                            <h4 class="text-2xl font-semibold text-gray-700">8,282</h4>
+                            <h4 class="text-2xl font-semibold text-gray-700">{{ $jumlahKeluarga }}</h4>
                             <div class="text-gray-500">Jumlah Seluruh Keluarga Terdaftar</div>
                         </div>
                     </div>

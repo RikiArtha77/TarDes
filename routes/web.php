@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\KontakController;
-use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OperatorAuthController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\OperatorMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -19,11 +18,12 @@ use Inertia\Inertia;
 //     ]);
 // });
 
-Route::get('/', [LandingController::class,'index'])->name('landing');
-Route::get('/formlogin', [LandingController::class,'formlogin'])->name('formlogin');
-Route::get('/formdaftar', [LandingController::class,'formdaftar'])->name('formdaftar');
-Route::get('Hub', [KontakController::class,'index'])->name('Hub');
-Route::get('/Testing', [LandingController::class,'Testing'])->name('Testing');
+Route::get('/', [UserController::class, 'index'])->name('landing');
+
+Route::prefix('/')->group(function () {
+    Route::resource('user', UserController::class);
+});
+
 
 
 Route::get('/operator/login', [OperatorAuthController::class, 'showLoginForm'])->name('operator.LoginForm');
@@ -33,6 +33,8 @@ Route::middleware([OperatorMiddleware::class])->group(function () {
     Route::get('/operator/dashboard', [OperatorController::class, 'index'])->name('operator.daftarkeluarga');
     Route::resource('operator', OperatorController::class);
 });
+
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
