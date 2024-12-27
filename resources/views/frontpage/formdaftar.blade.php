@@ -1,112 +1,206 @@
 <x-home-layout>
-    <!-- component -->
-<div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
-    <div class="container max-w-screen-lg mx-auto">
-      <div>
-        <h2 class="font-semibold text-xl text-gray-600">Responsive Form</h2>
-        <p class="text-gray-500 mb-6">Form is mobile responsive. Give it a try.</p>
-  
-        <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
-          <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
-            <div class="text-gray-600">
-              <p class="font-medium text-lg">Personal Details</p>
-              <p>Please fill out all the fields.</p>
-            </div>
-  
-            <div class="lg:col-span-2">
-              <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
-                <div class="md:col-span-5">
-                  <label for="full_name">Full Name</label>
-                  <input type="text" name="full_name" id="full_name" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="" />
-                </div>
-  
-                <div class="md:col-span-5">
-                  <label for="email">Email Address</label>
-                  <input type="text" name="email" id="email" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="" placeholder="email@domain.com" />
-                </div>
-  
-                <div class="md:col-span-3">
-                  <label for="address">Address / Street</label>
-                  <input type="text" name="address" id="address" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="" placeholder="" />
-                </div>
-  
-                <div class="md:col-span-2">
-                  <label for="city">City</label>
-                  <input type="text" name="city" id="city" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="" placeholder="" />
-                </div>
-  
-                <div class="md:col-span-2">
-                  <label for="country">Country / region</label>
-                  <div class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
-                    <input name="country" id="country" placeholder="Country" class="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent" value="" />
-                    <button tabindex="-1" class="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-red-600">
-                      <svg class="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                      </svg>
-                    </button>
-                    <button tabindex="-1" for="show_more" class="cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-300 hover:text-blue-600">
-                      <svg class="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                    </button>
+  <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+  </h2>
+
+  <div class="shadow px-6 py-4 bg-white rounded sm:px-16 sm:py-16 text-black">
+      <div class="container mx-auto">
+          <form enctype="multipart/form-data" action="{{ route('user.store') }}" method="POST">
+              @csrf
+
+              <div class="px-2 py-8 bg-white sm:p-6">
+                  <div class="grid grid-cols-6 gap-6">
+
+                      <div class="col-span-6 sm:col-span-3">
+                          <label for="nama_kpl" class="block text-sm font-medium text-gray-700">Nama Kepala Keluarga</label>
+                          <input 
+                              type="text" 
+                              id="nama_kpl" 
+                              name="nama_kpl" 
+                              placeholder="Nama Kepala Keluarga" 
+                              required 
+                              class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          >
+                          @error('nama_kpl')
+                              <div class="text-xs text-red-800">{{ $message }}</div>
+                          @enderror
+                      </div>
+                      <div class="col-span-6 sm:col-span-3">
+                          <label for="NIK" class="block text-sm font-medium text-gray-700">NIK</label>
+                          <input 
+                              type="text" 
+                              id="NIK" 
+                              name="NIK" 
+                              placeholder="NIK" 
+                              required 
+                              class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          >
+                          @error('NIK')
+                              <div class="text-xs text-red-800">{{ $message }}</div>
+                          @enderror
+                      </div>
+                      <div class="col-span-6 sm:col-span-3">
+                          <label for="Pekerjaan" class="block text-sm font-medium text-gray-700">Pekerjaan</label>
+                          <input 
+                              type="text" 
+                              name="Pekerjaan" 
+                              id="Pekerjaan" 
+                              placeholder="Pekerjaan" 
+                              required 
+                              class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          >
+                          @error('Pekerjaan')
+                              <div class="text-xs text-red-800">{{ $message }}</div>
+                          @enderror
+                      </div>
+                      <div class="col-span-6 sm:col-span-3">
+                          <label for="No_KK" class="block text-sm font-medium text-gray-700">No KK</label>
+                          <input 
+                              type="text" 
+                              id="No_KK" 
+                              name="No_KK" 
+                              placeholder="No_KK" 
+                              required 
+                              class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          >
+                          @error('No_KK')
+                              <div class="text-xs text-red-800">{{ $message }}</div>
+                          @enderror
+                      </div>
+                      <div class="col-span-6 sm:col-span-3">
+                          <label for="jmh_anggota" class="block text-sm font-medium text-gray-700">Jumlah Anggota Keluarga</label>
+                          <input 
+                              type="number" 
+                              id="jmh_anggota" 
+                              name="jmh_anggota" 
+                              placeholder="Jumlah Anggota Keluarga" 
+                              required 
+                              class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          >
+                          @error('jmh_anggota')
+                              <div class="text-xs text-red-800">{{ $message }}</div>
+                          @enderror
+                      </div>
+                      <div class="col-span-6 sm:col-span-3">
+                          <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat</label>
+                          <textarea name="alamat" id="alamat" cols="30" rows="2"
+                          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadowsm sm:text-sm border-gray-300 rounded-md">
+                          </textarea>
+                          @error('alamat')
+                              <div class="text-xs text-red-800">{{ $message }}</div>
+                          @enderror
+                      </div>
+                      <div class="col-span-6 sm:col-span-3">
+                          <label for="no_rumah" class="block text-sm font-medium text-gray-700">No Rumah</label>
+                          <input 
+                              type="number" 
+                              id="no_rumah" 
+                              name="no_rumah" 
+                              placeholder="No Rumah" 
+                              required
+                              class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          >
+                          @error('no_rumah')
+                              <div class="text-xs text-red-800">{{ $message }}</div>
+                          @enderror
+                      </div>
+                      <div class="col-span-6 sm:col-span-3">
+                          <label for="komunitas_id" class="block text-sm font-medium text-gray-700">Komunitas</label>
+                          <select 
+                              id="komunitas_id" 
+                              name="komunitas_id"
+                              class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                              <option value="">Pilih Komunitas</option>
+                              @foreach ($komunitas as $item)
+                                    <option {{ ((isset($datkel) && $datkel->komunitas_id == $item->komunitas_id) == $item->komunitas_id) ? 'selected' : '' }} 
+                                            value="{{ $item->komunitas_id }}">
+                                        {{ $item->komunitas_nama }}
+                                    </option>
+                                @endforeach
+                          </select>
+                          @error('komunitas_id')
+                              <div class="text-xs text-red-800">{{ $message }}</div>
+                          @enderror
+                      </div>
+                      <div class="col-span-6 sm:col-span-3">
+                          <label for="gambar_rumah" class="block text-sm font-medium text-gray-700">Foto Rumah</label>
+                          <input 
+                              type="file" 
+                              name="gambar_rumah" 
+                              id="gambar_rumah"
+                              class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          >
+                          @error('gambar_rumah')
+                              <div class="text-xs text-red-800">{{ $message }}</div>
+                          @enderror
+                      </div>
+                      <div class="col-span-6 sm:col-span-3">
+                          <label for="gambar_kk" class="block text-sm font-medium text-gray-700">Foto KK</label>
+                          <input 
+                              type="file" 
+                              name="gambar_kk" 
+                              id="gambar_kk"
+                              class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          >
+                          @error('gambar_kk')
+                              <div class="text-xs text-red-800">{{ $message }}</div>
+                          @enderror
+                      </div>                    
+                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div class="col-span-6 sm:col-span-3">
+                              <label for="latitude" class="block text-sm font-medium text-gray-700">Latitude</label>
+                              <input type="text" id="latitude" name="latitude" required
+                                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                          </div>
+                          
+                          <div class="col-span-6 sm:col-span-3">
+                              <label for="longitude" class="block text-sm font-medium text-gray-700">Longitude</label>
+                              <input type="text" id="longitude" name="longitude" required
+                                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                          </div>
+                          
+                          <!-- Tombol untuk mengambil lokasi -->
+                          <div class="col-span-2">
+                              <button type="button" id="get-location" 
+                                      class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md ring bg-indigo-600 hover:bg-indigo-700 text-white">
+                                  Get My Location
+                              </button>
+                          </div>                            
+                      </div>                                
                   </div>
-                </div>
-  
-                <div class="md:col-span-2">
-                  <label for="state">State / province</label>
-                  <div class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
-                    <input name="state" id="state" placeholder="State" class="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent" value="" />
-                    <button tabindex="-1" class="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-red-600">
-                      <svg class="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                      </svg>
-                    </button>
-                    <button tabindex="-1" for="show_more" class="cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-300 hover:text-blue-600">
-                      <svg class="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                    </button>
-                  </div>
-                </div>
-  
-                <div class="md:col-span-1">
-                  <label for="zipcode">Zipcode</label>
-                  <input type="text" name="zipcode" id="zipcode" class="transition-all flex items-center h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="" value="" />
-                </div>
-  
-                <div class="md:col-span-5">
-                  <div class="inline-flex items-center">
-                    <input type="checkbox" name="billing_same" id="billing_same" class="form-checkbox" />
-                    <label for="billing_same" class="ml-2">My billing address is different than above.</label>
-                  </div>
-                </div>
-  
-                <div class="md:col-span-2">
-                  <label for="soda">How many soda pops?</label>
-                  <div class="h-10 w-28 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
-                    <button tabindex="-1" for="show_more" class="cursor-pointer outline-none focus:outline-none border-r border-gray-200 transition-all text-gray-500 hover:text-blue-600">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-2" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                      </svg>
-                    </button>
-                    <input name="soda" id="soda" placeholder="0" class="px-2 text-center appearance-none outline-none text-gray-800 w-full bg-transparent" value="0" />
-                    <button tabindex="-1" for="show_more" class="cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-500 hover:text-blue-600">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-2 fill-current" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-        
-                <div class="md:col-span-5 text-right">
-                  <div class="inline-flex items-end">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
-                  </div>
-                </div>
-  
               </div>
-            </div>
-          </div>
-        </div>
+
+              <hr>
+
+              <!-- Tombol Submit -->
+              <div class="px-4 py-3 bg-white text-right sm:px-6">
+                  <button type="submit" class="inline-flex justify-center w-24 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md ring bg-indigo-600 hover:bg-indigo-700 text-white">
+                      Save
+                  </button>
+              </div>
+          </form>
       </div>
-    </div>
   </div>
+  @section('scripts')
+  <script>
+      CKEDITOR.replace('alamat', {
+  toolbar: [
+      { name: 'basicstyles', items: ['Bold', 'Italic']}
+      ],
+  });
+  </script>
+  <script>
+      document.getElementById('get-location').addEventListener('click', function() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(function(position) {
+                  document.getElementById('latitude').value = position.coords.latitude;
+                  document.getElementById('longitude').value = position.coords.longitude;
+              }, function(error) {
+                  alert('Geolocation error: ' + error.message);
+              });
+          } else {
+              alert('Geolocation is not supported by this browser.');
+          }
+      });
+  </script>
+  @endsection
 </x-home-layout>
