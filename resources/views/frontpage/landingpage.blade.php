@@ -5,7 +5,6 @@
       <div>
           <h1 class="text-4xl sm:text-6xl font-extrabold mb-4">Selamat Datang di TarDes</h1>
           <p class="text-lg sm:text-2xl mb-8">"Mudah, Cepat, dan Transparan: Daftar Diri Anda Secara Online"</p>
-          <a href="{{ route('user.create') }}" class="bg-white text-indigo-500 px-6 py-3 rounded-lg shadow-md hover:bg-indigo-100 transition">Daftar</a>
       </div>
     </section>
 

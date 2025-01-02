@@ -3,10 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OperatorAuthController;
 use App\Http\Controllers\OperatorController;
-use App\Http\Controllers\UserController;
 use App\Http\Middleware\OperatorMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LandingController;
 use Inertia\Inertia;
 
 // Route::get('/', function () {
@@ -18,23 +18,30 @@ use Inertia\Inertia;
 //     ]);
 // });
 
-Route::get('/', [UserController::class, 'index'])->name('landing');
-
-Route::prefix('/')->group(function () {
-    Route::resource('user', UserController::class);
-});
+Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 
 
 Route::get('/operator/login', [OperatorAuthController::class, 'showLoginForm'])->name('operator.LoginForm');
 Route::post('/operator/login', [OperatorAuthController::class, 'login'])->name('operator.login');
+Route::get('/operator/register', [OperatorAuthController::class, 'showRegisterForm'])->name('operator.registerForm');
+Route::post('/operator/register', [OperatorAuthController::class, 'register'])->name('operator.register');
+
+// Route for the landing page (for level 1 users)
+Route::get('/', function () {
+    return view('frontpage.landingpage');
+})->name('landing');
+
+// Route for the operator dashboard (for level 2 operators)
+Route::get('operator/daftarkeluarga', function () {
+    return view('operatorr.daftarkeluarga');
+})->name('operator.daftarkeluarga');
+
 
 Route::middleware([OperatorMiddleware::class])->group(function () {
     Route::get('/operator/dashboard', [OperatorController::class, 'index'])->name('operator.daftarkeluarga');
     Route::resource('operator', OperatorController::class);
 });
-
-
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

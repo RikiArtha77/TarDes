@@ -5,7 +5,7 @@
                 {{ $errors->first() }}
             </div>
         @endif      
-        <form method="POST" form action="{{ route('') }}">
+        <form method="POST" form action="{{ route('operator.register') }}">
             @csrf
             <div class="bg-white px-10 py-8 rounded-xl w-screen shadow-xl max-w-sm">
                 <div class="space-y-4">
@@ -32,7 +32,7 @@
                 <hr>
                 <div class="flex justify-center items-center mt-4">
                     <p class="inline-flex items-center text-gray-700 font-medium text-xs text-center">
-                        <span class="ml-2">Sudah memiliki akun? <a href="#" class="text-xs ml-2 text-blue-500 font-semibold">Login sekarang &rarr;</a></span>
+                        <span class="ml-2">Sudah memiliki akun? <a href="{{ route('operator.LoginForm') }}" class="text-xs ml-2 text-blue-500 font-semibold">Login sekarang &rarr;</a></span>
                     </p>
                 </div>
             </div>

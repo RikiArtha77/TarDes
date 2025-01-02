@@ -22,9 +22,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $komunitas = komunitas::all();
-
-        return view('frontpage.formdaftar', compact( 'komunitas'));
+       
     }
 
     /**
@@ -32,52 +30,7 @@ class UserController extends Controller
      */
     public function store(Request $request) 
 {
-    // Pesan error kustom
-    $message = [
-        'required' => 'Kolom :attribute harus lengkap',
-        'numeric' => 'Kolom :attribute harus angka',
-        'file' => 'Perhatikan format dan ukuran data'
-    ];
-
-    // Validasi input
-    $validasi = $request->validate([
-        'nama_kpl' => 'required',
-        'komunitas_id' => 'required',
-        'NIK' => 'required',
-        'Pekerjaan' => 'required',
-        'No_KK' => 'required',
-        'jmh_anggota' => 'required|numeric',
-        'alamat' => 'required',
-        'no_rumah' => 'required|numeric',
-        'gambar_rumah' => 'required|mimes:png,jpg|max:1024',
-        'gambar_kk' => 'required|mimes:png,jpg|max:1024',
-        'latitude' => 'required|numeric',
-        'longitude' => 'required|numeric',
-    ], $message);
-
-    try {
-        // Menangani upload gambar rumah jika ada
-        if ($request->hasFile('gambar_rumah')) {
-            $fileName = time() . $request->file('gambar_rumah')->getClientOriginalName();
-            $path_rumah = $request->file('gambar_rumah')->storeAs('gambar_rumah', $fileName, 'public');
-            $validasi['gambar_rumah'] = $path_rumah;
-        }
-
-        // Menangani upload gambar KK jika ada
-        if ($request->hasFile('gambar_kk')) {
-            $fileName = time() . $request->file('gambar_kk')->getClientOriginalName();
-            $path_kk = $request->file('gambar_kk')->storeAs('gambar_kk', $fileName, 'public');
-            $validasi['gambar_kk'] = $path_kk;
-        }
-
-        // Simpan data ke database
-        $response = DatKel::create($validasi);
-
-        return redirect('landing')->with('success', 'Data berhasil disimpan!');
-    } catch (\Exception $e) {
-        // Tangani error dan tampilkan pesan error
-        return back()->withErrors(['error' => $e->getMessage()]);
-    }
+    
 }
 
     /**

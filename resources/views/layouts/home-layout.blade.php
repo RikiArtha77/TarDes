@@ -14,9 +14,9 @@
             <a href="{{ route('landing') }}" class="text-2xl font-bold ">TarDes</a>
             <nav class="space-x-4">
                 <a href="{{ route('landing') }}" class="hover:underline">Beranda</a>
-                <a href="{{ route('operator.LoginForm') }}" class="hover:underline">Login</a>
+                <a href="{{ route('operator.registerForm') }}" class="hover:underline">Register</a>
                 <a href="#about" class="hover:underline">About</a>
-                <a href="#contact" class="hover:underline">Contact</a>
+                <a href="#contact" class="hover:underline">Profil</a>
             </nav>
         </div>
     </header>

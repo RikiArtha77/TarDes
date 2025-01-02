@@ -9,7 +9,8 @@ class Operator extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = ['username', 'password'];
+    protected $fillable = ['username', 'password', 'level'];
+
 
     protected $hidden = ['password'];
 }

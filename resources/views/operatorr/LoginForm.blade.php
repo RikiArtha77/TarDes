@@ -32,7 +32,7 @@
                 <hr>
                 <div class="flex justify-center items-center mt-4">
                     <p class="inline-flex items-center text-gray-700 font-medium text-xs text-center">
-                        <span class="ml-2">Tidak memiliki akun?<a href="#" class="text-xs ml-2 text-blue-500 font-semibold">Daftar sekarang &rarr;</a>
+                        <span class="ml-2">Tidak memiliki akun?<a href="{{ route('operator.registerForm') }}" class="text-xs ml-2 text-blue-500 font-semibold">Daftar sekarang &rarr;</a>
                         </span>
                     </p>
                 </div>
