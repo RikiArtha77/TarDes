@@ -9,6 +9,10 @@ class Operator extends Authenticatable
 {
     use Notifiable;
 
+    public $primaryKey='operator_id';
+    protected $table="operators";
+
+
     protected $fillable = ['username', 'password', 'level'];
 
 

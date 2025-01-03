@@ -1,7 +1,7 @@
 <x-home-layout>
   <container>
       <!-- Hero Section -->
-    <section class="flex-1 flex items-center justify-center text-center mb-16"> <!-- Tambahkan 'mb-16' untuk jarak -->
+    <section class="flex-1 flex items-center justify-center text-center mb-16 text-gray-800 pt-16 pb-8"> <!-- Tambahkan 'mb-16' untuk jarak -->
       <div>
           <h1 class="text-4xl sm:text-6xl font-extrabold mb-4">Selamat Datang di TarDes</h1>
           <p class="text-lg sm:text-2xl mb-8">"Mudah, Cepat, dan Transparan: Daftar Diri Anda Secara Online"</p>

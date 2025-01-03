@@ -12,15 +12,24 @@
     <header class="bg-transparent py-4">
         <div class="container mx-auto flex justify-between items-center px-4">
             <a href="{{ route('landing') }}" class="text-2xl font-bold ">TarDes</a>
-            <nav class="space-x-4">
-                <a href="{{ route('landing') }}" class="hover:underline">Beranda</a>
-                <a href="{{ route('operator.registerForm') }}" class="hover:underline">Register</a>
-                <a href="#about" class="hover:underline">About</a>
-                <a href="#contact" class="hover:underline">Profil</a>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="{{ route('landing') }}">Beranda</a></li>
+                    
+                    @guest('operator')
+                        <li><a href="{{ route('operator.registerForm') }}">Register</a></li>
+                    @endguest
+
+                    @auth('operator')
+                        <li><span>Halo, {{ Auth::guard('operator')->user()->username }}</span></li>
+                        <li><a href="{{ route('profil') }}">Profil</a></li>
+                        <li><a href="{{ route('operator.logout') }}">Logout</a></li>
+                    @endauth
+                </ul>
             </nav>
         </div>
     </header>
-    <container>
+    <container class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
         {{ $slot }}
     </container>
     <!-- Footer -->
