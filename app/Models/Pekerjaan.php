@@ -11,7 +11,5 @@ class Pekerjaan extends Model
 
     public $primaryKey='pekerjaan_id';
     protected $table="pekerjaan";
-
-
     protected $fillable = ['nama_pekerjaan'];
 }

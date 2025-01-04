@@ -11,7 +11,5 @@ class Banjar extends Model
 
     public $primaryKey='banjar_id';
     protected $table="banjar";
-
-
     protected $fillable = ['nama_banjar'];
 }

@@ -14,7 +14,7 @@ class komunitas extends Model
         'komunitas_nama'
     ];
 
-    public function packages (){
-        return $this->hasMany(DatKel::class,'komunitas_id','komunitas_id');
-    }
+    // public function packages (){
+    //     return $this->hasMany(DatKel::class,'komunitas_id','komunitas_id');
+    // }
 }

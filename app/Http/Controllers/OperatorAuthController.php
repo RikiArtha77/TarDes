@@ -10,6 +10,7 @@ use App\Models\Pekerjaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class OperatorAuthController extends Controller
 {
@@ -33,7 +34,6 @@ class OperatorAuthController extends Controller
             if ($operator->level == 2) {
                 return redirect()->route('operator.daftarkeluarga')->with('success', 'Login berhasil!');
             } else {
-                // Redirect normal users (level 1) to the landing page
                 return redirect()->route('landing')->with('success', 'Login berhasil!');
             }
         }
@@ -44,28 +44,26 @@ class OperatorAuthController extends Controller
     public function logout()
     {
         Auth::guard('operator')->logout();
-        return redirect()->route('operator.LoginForm')->with('success', 'Logout berhasil!');
+        return redirect()->route('landing')->with('success', 'Logout berhasil!');
     }
 
-    // Show the registration form
     public function showRegisterForm()
     {
         return view('operatorr.registerForm');
     }
 
-    // Handle the registration logic
     public function register(Request $request)
     {
         $request->validate([
             'username' => 'required|unique:operators,username',
             'email' => 'required',
-            'password' => 'required|confirmed|min:8', // Ensures password confirmation is correct
+            'password' => 'required|confirmed|min:8',
         ]);
 
         // Create operator with level set to 1 (user by default)
         $operator = Operator::create([
             'username' => $request->username,
-            'password' => Hash::make($request->password), // Hash the password
+            'password' => Hash::make($request->password),
             'level' => 1
         ]);
 
@@ -75,65 +73,65 @@ class OperatorAuthController extends Controller
     }
 
     public function showUserProfile()
-    {
-         // Mendapatkan operator yang sedang login
-        $operator = Auth::guard('operator')->user();
-
-        // Memuat data terkait operator
-        $biodata = Biodata::where('operator_id', $operator->id)->first();
-        $komunitas = Komunitas::all();
-        $banjar = Banjar::all();
-        $pekerjaan = Pekerjaan::all();
-
-        // Mengirim data ke view
-        return view('frontpage.profil', compact('operator', 'biodata', 'komunitas', 'banjar', 'pekerjaan'));
-    }
-
-    public function updateUserProfile(Request $request)
 {
-    $request->validate([
-        'nama_kepala_keluarga' => 'nullable|string|max:255',
-        'nik' => 'nullable|digits:16',
-        'kk' => 'nullable|digits:16',
-        'pekerjaan_id' => 'nullable|exists:pekerjaan,id',
-        'alamat' => 'nullable|string|max:255',
-        'komunitas_id' => 'nullable|exists:komunitas,id',
-        'banjar_id' => 'nullable|exists:banjar,id',
-        'foto_kk' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        'foto_rumah' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        'jumlah_keluarga' => 'nullable|integer|min:1',
-    ]);
-
-    // Mendapatkan operator yang sedang login
     $operator = Auth::guard('operator')->user();
 
-    // Upload file jika ada
-    $fotoKkPath = $request->hasFile('foto_kk') 
-        ? $request->file('foto_kk')->store('foto_kk', 'public') 
-        : null;
+    // Load operator-related data
+    $biodata = Biodata::where('operator_id', $operator->id)->first();
+    $komunitas = komunitas::all();
+    $banjar = Banjar::all();
+    $pekerjaan = Pekerjaan::all();
 
-    $fotoRumahPath = $request->hasFile('foto_rumah') 
-        ? $request->file('foto_rumah')->store('foto_rumah', 'public') 
-        : null;
-
-    // Update atau buat data biodata
-    Biodata::updateOrCreate(
-        ['operator_id' => $operator->id],
-        [
-            'nama_kepala_keluarga' => $request->nama_kepala_keluarga,
-            'nik' => $request->nik,
-            'kk' => $request->kk,
-            'pekerjaan_id' => $request->pekerjaan_id,
-            'alamat' => $request->alamat,
-            'komunitas_id' => $request->komunitas_id,
-            'banjar_id' => $request->banjar_id,
-            'foto_kk' => $fotoKkPath ?? $operator->biodata->foto_kk ?? null,
-            'foto_rumah' => $fotoRumahPath ?? $operator->biodata->foto_rumah ?? null,
-            'jumlah_keluarga' => $request->jumlah_keluarga,
-        ]
-    );
-
-    return redirect()->route('profil')->with('success', 'Profil berhasil diperbarui!');
+    return view('frontpage.profil', compact('operator', 'biodata', 'komunitas', 'banjar', 'pekerjaan'));
 }
 
+public function updateUserProfile(Request $request)
+{
+    $validatedData = $request->validate([
+        'nama_kepala_keluarga' => 'nullable|string|max:255',
+        'nik' => 'nullable|numeric',
+        'kk' => 'nullable|numeric',
+        'pekerjaan_id' => 'nullable|exists:pekerjaan,pekerjaan_id',
+        'alamat' => 'nullable|string|max:255',
+        'komunitas_id' => 'nullable|exists:komunitas,komunitas_id',
+        'banjar_id' => 'nullable|exists:banjar,banjar_id',
+        'foto_kk' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'foto_rumah' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'jumlah_anggota' => 'nullable|numeric',
+        'latitude' => 'nullable|numeric',
+        'longitude' => 'nullable|numeric',
+    ]);
+
+    try {
+        // Get the logged-in operator
+        $operator = Auth::guard('operator')->user();
+        if (!$operator) {
+            return redirect()->route('login')->withErrors(['error' => 'Anda harus login terlebih dahulu.']);
+        }
+
+        // Handle image upload for foto_rumah
+        if ($request->hasFile('foto_rumah')) {
+            $fileName = time() . '_' . $request->file('foto_rumah')->getClientOriginalName();
+            $path_rumah = $request->file('foto_rumah')->storeAs('foto_rumah', $fileName, 'public');
+            $validatedData['foto_rumah'] = $path_rumah;
+        }
+
+        // Handle image upload for foto_kk
+        if ($request->hasFile('foto_kk')) {
+            $fileName = time() . '_' . $request->file('foto_kk')->getClientOriginalName();
+            $path_kk = $request->file('foto_kk')->storeAs('foto_kk', $fileName, 'public');
+            $validatedData['foto_kk'] = $path_kk;
+        }
+
+        // Check if Biodata exists for the operator_id, else create a new one
+        $biodata = Biodata::updateOrCreate(
+            ['operator_id' => $operator->operator_id], // check if operator_id exists
+            $validatedData  // update with new data
+        );
+
+        return redirect()->route('landing')->with('success', 'Data berhasil disimpan!');
+    } catch (\Exception $e) {
+        return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+    }
+}
 }

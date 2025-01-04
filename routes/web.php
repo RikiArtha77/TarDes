@@ -30,7 +30,7 @@ Route::get('/logout', [OperatorAuthController::class, 'logout'])->name('operator
 
 Route::middleware('auth:operator')->group(function () {
     Route::get('/profile', [OperatorAuthController::class, 'showUserProfile'])->name('profil');
-    Route::post('/profile/update', [OperatorAuthController::class, 'updateUserProfile'])->name('profile.update');
+    Route::post('/profile', [OperatorAuthController::class, 'updateUserProfile'])->name('pupdate');
 });
 
 // Route for the landing page (for level 1 users)

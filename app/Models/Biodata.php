@@ -9,9 +9,7 @@ class Biodata extends Model
 {
     use HasFactory;
 
-    public $primaryKey='id';
-    protected $table="biodata";
-
+    protected $table = 'biodata';
 
     protected $fillable = [
         'operator_id',
@@ -19,41 +17,35 @@ class Biodata extends Model
         'nik',
         'kk',
         'pekerjaan_id',
+        'alamat',
         'komunitas_id',
         'banjar_id',
-        'alamat',
         'foto_kk',
         'foto_rumah',
         'jumlah_keluarga',
+        'latitude',
+        'longitude',
     ];
 
-    /**
-     * Relasi dengan model Operator.
-     */
+    // Relasi ke tabel Operator
     public function operator()
     {
         return $this->belongsTo(Operator::class);
     }
 
-    /**
-     * Relasi dengan model Pekerjaan.
-     */
+    // Relasi ke tabel Pekerjaan
     public function pekerjaan()
     {
         return $this->belongsTo(Pekerjaan::class);
     }
 
-    /**
-     * Relasi dengan model Komunitas.
-     */
+    // Relasi ke tabel Komunitas
     public function komunitas()
     {
-        return $this->belongsTo(komunitas::class);
+        return $this->belongsTo(Komunitas::class);
     }
 
-    /**
-     * Relasi dengan model Banjar.
-     */
+    // Relasi ke tabel Banjar
     public function banjar()
     {
         return $this->belongsTo(Banjar::class);

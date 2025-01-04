@@ -15,7 +15,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
               <div class="p-6 bg-gray-100 rounded-lg shadow-md">
                   <h3 class="text-xl font-semibold mb-2">Mudah</h3>
-                  <p>Dengan antarmuka yang sederhana dan intuitif, website ini dirancang agar mudah digunakan oleh semua kalangan, baik warga desa maupun petugas administrasi..</p>
+                  <p>Dengan antarmuka yang sederhana dan intuitif, website ini dirancang agar mudah digunakan oleh semua kalangan, baik warga desa maupun petugas administrasi.</p>
               </div>
               <div class="p-6 bg-gray-100 rounded-lg shadow-md">
                   <h3 class="text-xl font-semibold mb-2">Cepat</h3>
@@ -24,6 +24,33 @@
               <div class="p-6 bg-gray-100 rounded-lg shadow-md">
                   <h3 class="text-xl font-semibold mb-2">Transparan</h3>
                   <p>Semua data warga desa tercatat dengan jelas dan dapat diakses oleh pihak berwenang sesuai izin. Status pendaftaran dapat dipantau secara langsung.</p>
+              </div>
+          </div>
+      </div>
+    </section>
+
+    <!-- Berita Kegiatan Section -->
+    <section id="berita-kegiatan" class="py-12 bg-gray-100 text-gray-800">
+      <div class="container mx-auto text-center px-4">
+          <h2 class="text-3xl font-bold mb-6">Berita Kegiatan Banjar</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <!-- Kegiatan 1 -->
+              <div class="p-6 bg-white rounded-lg shadow-md">
+                  <h3 class="text-xl font-semibold mb-2">Gotong Royong</h3>
+                  <p class="text-gray-600">Masyarakat Banjar melakukan gotong royong membersihkan lingkungan sekitar. Kegiatan ini dilaksanakan pada tanggal 5 Januari 2025.</p>
+                  <a href="#" class="text-blue-500 mt-4 block">Baca Selengkapnya</a>
+              </div>
+              <!-- Kegiatan 2 -->
+              <div class="p-6 bg-white rounded-lg shadow-md">
+                  <h3 class="text-xl font-semibold mb-2">Pendidikan Kesehatan</h3>
+                  <p class="text-gray-600">Kegiatan sosialisasi kesehatan bagi warga dilakukan oleh tenaga medis setempat pada 12 Januari 2025.</p>
+                  <a href="#" class="text-blue-500 mt-4 block">Baca Selengkapnya</a>
+              </div>
+              <!-- Kegiatan 3 -->
+              <div class="p-6 bg-white rounded-lg shadow-md">
+                  <h3 class="text-xl font-semibold mb-2">Pemberdayaan Ekonomi</h3>
+                  <p class="text-gray-600">Pelatihan kewirausahaan bagi ibu-ibu rumah tangga untuk meningkatkan perekonomian keluarga pada 18 Januari 2025.</p>
+                  <a href="#" class="text-blue-500 mt-4 block">Baca Selengkapnya</a>
               </div>
           </div>
       </div>
