@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banjar;
+use App\Models\Biodata;
 use App\Models\DatKel;
 use App\Models\komunitas;
+use App\Models\Operator;
+use App\Models\Pekerjaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Auth;
 
 class OperatorController extends Controller
 {
@@ -14,9 +19,10 @@ class OperatorController extends Controller
      * Display a listing of the resource.
      */
     public function index(){
-        $datkel=DatKel::all();
-        $jumlahKeluarga = $datkel->count();
-        return view('operatorr.daftarkeluarga', compact('datkel', 'jumlahKeluarga'));
+        $biodata = Biodata::all();
+        $komunitas = komunitas::all();
+        $banjar = Banjar::all();
+        return view('operatorr.daftarkeluarga', compact('biodata', 'banjar','komunitas'));
     }
 
     /**
@@ -24,59 +30,12 @@ class OperatorController extends Controller
      */
     public function create()
     {
-        $komunitas = komunitas::all();
-
-        return view('operatorr.inputdatkel', compact( 'komunitas'));
+    
     }
 
     public function store(Request $request) 
 {
-    // Pesan error kustom
-    $message = [
-        'required' => 'Kolom :attribute harus lengkap',
-        'numeric' => 'Kolom :attribute harus angka',
-        'file' => 'Perhatikan format dan ukuran data'
-    ];
-
-    // Validasi input
-    $validasi = $request->validate([
-        'nama_kpl' => 'required',
-        'komunitas_id' => 'required',
-        'NIK' => 'required',
-        'Pekerjaan' => 'required',
-        'No_KK' => 'required',
-        'jmh_anggota' => 'required|numeric',
-        'alamat' => 'required',
-        'no_rumah' => 'required|numeric',
-        'gambar_rumah' => 'required|mimes:png,jpg|max:1024',
-        'gambar_kk' => 'required|mimes:png,jpg|max:1024',
-        'latitude' => 'required|numeric',
-        'longitude' => 'required|numeric',
-    ], $message);
-
-    try {
-        // Menangani upload gambar rumah jika ada
-        if ($request->hasFile('gambar_rumah')) {
-            $fileName = time() . $request->file('gambar_rumah')->getClientOriginalName();
-            $path_rumah = $request->file('gambar_rumah')->storeAs('gambar_rumah', $fileName, 'public');
-            $validasi['gambar_rumah'] = $path_rumah;
-        }
-
-        // Menangani upload gambar KK jika ada
-        if ($request->hasFile('gambar_kk')) {
-            $fileName = time() . $request->file('gambar_kk')->getClientOriginalName();
-            $path_kk = $request->file('gambar_kk')->storeAs('gambar_kk', $fileName, 'public');
-            $validasi['gambar_kk'] = $path_kk;
-        }
-
-        // Simpan data ke database
-        $response = DatKel::create($validasi);
-
-        return redirect('operator')->with('success', 'Data berhasil disimpan!');
-    } catch (\Exception $e) {
-        // Tangani error dan tampilkan pesan error
-        return back()->withErrors(['error' => $e->getMessage()]);
-    }
+    
 }
 
 
@@ -91,63 +50,59 @@ class OperatorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        $komunitas = komunitas::all();
-        $datkel=DatKel::find($id);;
-        return view('operatorr.inputdatkel', compact( 'komunitas','datkel'));
-    }
+    public function edit($id)
+{
+    $pekerjaan = Pekerjaan::all();
+    $banjar = Banjar::all();
+    $komunitas = komunitas::all();
+    $biodata=Biodata::find($id);;
+    return view('operatorr.bio', compact( 'komunitas','biodata','banjar','pekerjaan'));
+}
+
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
 {
-    // Pesan error kustom
-    $message = [
-        'required' => 'Kolom :attribute harus lengkap',
-        'numeric' => 'Kolom :attribute harus angka',
-        'file' => 'Perhatikan format dan ukuran data'
-    ];
-
-    // Validasi input
-    $validasi = $request->validate([
-        'nama_kpl' => 'required',
-        'komunitas_id' => 'required',
-        'NIK' => 'required',
-        'Pekerjaan' => 'required',
-        'No_KK' => 'required',
-        'jmh_anggota' => 'required|numeric',
-        'alamat' => 'required',
-        'no_rumah' => 'required|numeric',
-        'gambar_rumah' => 'required|mimes:png,jpg|max:1024',
-        'gambar_kk' => 'required|mimes:png,jpg|max:1024',
-        'latitude' => 'required|numeric',
-        'longitude' => 'required|numeric',
-    ], $message);
+    $validatedData = $request->validate([
+        'nama_kepala_keluarga' => 'nullable|string|max:255',
+        'nik' => 'nullable|numeric',
+        'kk' => 'nullable|numeric',
+        'pekerjaan_id' => 'nullable|exists:pekerjaan,pekerjaan_id',
+        'alamat' => 'nullable|string|max:255',
+        'komunitas_id' => 'nullable|exists:komunitas,komunitas_id',
+        'banjar_id' => 'nullable|exists:banjar,banjar_id',
+        'foto_kk' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'foto_rumah' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'jumlah_anggota' => 'nullable|numeric',
+        'latitude' => 'nullable|numeric',
+        'longitude' => 'nullable|numeric',
+    ]);
 
     try {
-        // Menangani upload gambar rumah jika ada
-        if ($request->hasFile('gambar_rumah')) {
-            $fileName = time() . $request->file('gambar_rumah')->getClientOriginalName();
-            $path_rumah = $request->file('gambar_rumah')->storeAs('gambar_rumah', $fileName, 'public');
-            $validasi['gambar_rumah'] = $path_rumah;
+
+        // Handle image upload for foto_rumah
+        if ($request->hasFile('foto_rumah')) {
+            $fileName = time() . '_' . $request->file('foto_rumah')->getClientOriginalName();
+            $path_rumah = $request->file('foto_rumah')->storeAs('foto_rumah', $fileName, 'public');
+            $validatedData['foto_rumah'] = $path_rumah;
         }
 
-        // Menangani upload gambar KK jika ada
-        if ($request->hasFile('gambar_kk')) {
-            $fileName = time() . $request->file('gambar_kk')->getClientOriginalName();
-            $path_kk = $request->file('gambar_kk')->storeAs('gambar_kk', $fileName, 'public');
-            $validasi['gambar_kk'] = $path_kk;
+        // Handle image upload for foto_kk
+        if ($request->hasFile('foto_kk')) {
+            $fileName = time() . '_' . $request->file('foto_kk')->getClientOriginalName();
+            $path_kk = $request->file('foto_kk')->storeAs('foto_kk', $fileName, 'public');
+            $validatedData['foto_kk'] = $path_kk;
         }
 
         // Simpan data ke database
-        $response = DatKel::find($id)->update($validasi);
+        $response = Biodata::find($id)->update($validatedData);
 
-        return redirect('operator')->with('success', 'Data berhasil disimpan!');
+        return redirect()->route('operator.daftarkeluarga')->with('success', 'Data berhasil disimpan!');
     } catch (\Exception $e) {
-        // Tangani error dan tampilkan pesan error
-        return back()->withErrors(['error' => $e->getMessage()]);
+        return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
     }
 }
 

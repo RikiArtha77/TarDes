@@ -12,4 +12,10 @@ class Banjar extends Model
     public $primaryKey='banjar_id';
     protected $table="banjar";
     protected $fillable = ['nama_banjar'];
+
+    public function biodata()
+{
+    return $this->hasMany(Biodata::class, 'banjar_id', 'banjar_id');
+}
+
 }

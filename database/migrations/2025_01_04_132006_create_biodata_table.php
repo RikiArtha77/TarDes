@@ -26,10 +26,10 @@ class CreateBiodataTable extends Migration
             $table->timestamps();
 
             // Relasi foreign key
-            $table->foreign('operator_id')->references('id')->on('operators')->onDelete('cascade');
-            $table->foreign('pekerjaan_id')->references('id')->on('pekerjaan')->onDelete('set null');
-            $table->foreign('komunitas_id')->references('id')->on('komunitas')->onDelete('set null');
-            $table->foreign('banjar_id')->references('id')->on('banjar')->onDelete('set null');
+            $table->foreign('operator_id')->references('operator_id')->on('operators');
+            $table->foreign('pekerjaan_id')->references('pekerjaan_id')->on('pekerjaan');
+            $table->foreign('komunitas_id')->references('komunitas_id')->on('komunitas');
+            $table->foreign('banjar_id')->references('banjar_id')->on('banjar');
         });
     }
 

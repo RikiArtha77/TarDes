@@ -31,7 +31,7 @@
                         </div>
 
                         <div class="mx-5">
-                            <h4 class="text-2xl font-semibold text-gray-700">{{ $jumlahKeluarga }}</h4>
+                            <h4 class="text-2xl font-semibold text-gray-700">300</h4>
                             <div class="text-gray-500">Jumlah Seluruh Keluarga Terdaftar</div>
                         </div>
                     </div>
@@ -52,16 +52,19 @@
                             <tr>
                                 <th
                                     class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                                    Username</th>
+                                <th
+                                    class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                     Nama Kepala Keluarga</th>
                                 <th
                                     class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                    Desa Adat </th>
+                                    Kategori </th>
                                 <th
                                     class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                    No. KK</th>
+                                    Banjar</th>
                                 <th
                                     class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                    Pekerjaan</th>
+                                    No KK</th>
                                 <th
                                     class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                     Alamat</th>
@@ -72,49 +75,46 @@
                         </thead>
 
                         <tbody class="bg-white">
-                            @foreach ($datkel as $key=>$item )
+                            @foreach ($biodata as $key=>$item )
                             <tr>
+
+                                <td>
+                                    <div class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                        <div class="text-sm font-medium text-gray-900">{{ $item->operator->username }}</div>
+                                    </div>
+                                </td>
                                 <!-- Kepala Keluarga -->
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <div class="flex items-center">
-                                        <!-- Gambar -->
-                                        <div class="flex-shrink-0 w-12 h-12">
-                                            <img class="w-12 h-12 rounded-full object-cover"
-                                                src="{{ asset($item->gambar_rumah) }}" 
-                                                alt="Gambar Rumah">
-                                        </div>
-                                        <!-- Nama dan NIK -->
-                                        <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">{{ $item->nama_kpl }}</div>
-                                        </div>
+                                        <div class="text-sm font-medium text-gray-900">{{ $item->nama_kepala_keluarga }}</div>
                                     </div>
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                <div class="text-sm text-gray-500">{{ $item->komunitas->komunitas_nama }}</div>
+                                <div class="text-sm text-gray-900">{{ $item->komunitas->komunitas_nama }}</div>
                                 </td>
                         
                                 <!-- NIK -->
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    <div class="text-sm leading-5 text-gray-900">{{ $item->No_KK }}</div>
+                                    <div class="text-sm leading-5 text-gray-900">{{ $item->banjar->nama_banjar }}</div>
                                 </td>
                         
                                 <!-- Pekerjaan -->
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <span
-                                        class="inline-flex px-2 text-xs font-semibold leading-5 text-gray-500 border-gray-200">
-                                        {{ $item->Pekerjaan }}
+                                        class="inline-flex px-2 text-xs font-semibold leading-5 text-gray-900 border-gray-200">
+                                        {{ $item->kk }}
                                     </span>
                                 </td>
                         
                                 <!-- Alamat -->
-                                <td class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+                                <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap border-b border-gray-200">
                                     {{ $item->alamat }}
                                 </td>
                         
                                 <!-- Aksi -->
                                 <td class="px-6 py-4 text-sm font-medium leading-5 whitespace-no-wrap border-b border-gray-200">
-                                    <a href="{{ route('operator.edit', $item->datkel_id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                    <a href="{{ route('operator.edit', $item->id) }}"  class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                     <a href="javascript:void(0);" class="ml-4 text-red-600 hover:text-red-900" onclick="confirmDelete({{ $item->datkel_id }})">Delete</a>
                                 </td>
                             </tr>

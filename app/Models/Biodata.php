@@ -30,7 +30,7 @@ class Biodata extends Model
     // Relasi ke tabel Operator
     public function operator()
     {
-        return $this->belongsTo(Operator::class);
+        return $this->belongsTo(Operator::class, 'operator_id', 'operator_id');
     }
 
     // Relasi ke tabel Pekerjaan
@@ -41,13 +41,13 @@ class Biodata extends Model
 
     // Relasi ke tabel Komunitas
     public function komunitas()
-    {
-        return $this->belongsTo(Komunitas::class);
-    }
+{
+    return $this->belongsTo(Komunitas::class, 'komunitas_id', 'komunitas_id');
+}
 
     // Relasi ke tabel Banjar
     public function banjar()
     {
-        return $this->belongsTo(Banjar::class);
+        return $this->belongsTo(Banjar::class, 'banjar_id', 'banjar_id');
     }
 }

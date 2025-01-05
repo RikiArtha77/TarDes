@@ -10,6 +10,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="//cdn.ckeditor.com/4.21.0/basic/ckeditor.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 
 
 </head>
@@ -54,7 +57,7 @@
                         </path>
                     </svg>
     
-                    <span class="mx-3">Tambah Data</span>
+                    <span class="mx-3">Inbox</span>
                 </a>
             </nav>
         </div>
@@ -157,7 +160,7 @@
                             style="display: none;">
                             <a href="#"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Profile</a>
-                            <a href="#"
+                            <a href="{{ route('operator.logout') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Logout</a>
                         </div>
                     </div>

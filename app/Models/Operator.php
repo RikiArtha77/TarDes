@@ -17,4 +17,9 @@ class Operator extends Authenticatable
 
 
     protected $hidden = ['password'];
+
+    public function biodata()
+{
+    return $this->hasMany(Biodata::class, 'operator_id', 'operator_id');
+}
 }

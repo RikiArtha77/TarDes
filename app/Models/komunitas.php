@@ -17,4 +17,10 @@ class komunitas extends Model
     // public function packages (){
     //     return $this->hasMany(DatKel::class,'komunitas_id','komunitas_id');
     // }
+
+    public function biodata()
+{
+    return $this->hasMany(Biodata::class, 'komunitas_id', 'komunitas_id');
+}
+
 }
