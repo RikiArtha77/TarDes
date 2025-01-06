@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banjar;
+use App\Models\Bantuan;
 use App\Models\Biodata;
 use App\Models\komunitas;
 use App\Models\Operator;
 use App\Models\Pekerjaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -77,12 +79,19 @@ class OperatorAuthController extends Controller
     $operator = Auth::guard('operator')->user();
 
     // Load operator-related data
-    $biodata = Biodata::where('operator_id', $operator->id)->first();
+    $biodata = Biodata::where('operator_id', $operator->operator_id)->first();
     $komunitas = komunitas::all();
     $banjar = Banjar::all();
     $pekerjaan = Pekerjaan::all();
 
     return view('frontpage.profil', compact('operator', 'biodata', 'komunitas', 'banjar', 'pekerjaan'));
+}
+
+public function showBantuanForm()
+{
+    $operator = Auth::guard('operator')->user();
+
+    return view('operatorr.bantuanForm', compact('operator'));
 }
 
 public function updateUserProfile(Request $request)
@@ -133,5 +142,35 @@ public function updateUserProfile(Request $request)
     } catch (\Exception $e) {
         return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
     }
+}
+
+public function storeBantuan(Request $request)
+{
+    $request->validate([
+        'choices' => 'required|array|max:2', // Maksimal 2 pilihan
+        'choices.*' => 'in:PKH,PBI,KIS,KIP', // Validasi pilihan
+    ]);
+
+    $operator = Auth::guard('operator')->user();
+
+    if (!$operator) {
+        return redirect()->back()->withErrors(['error' => 'Operator belum login']);
+    }
+
+    Bantuan::create([
+        'operator_id' => $operator->operator_id,
+        'choices' => json_encode($request->choices),
+    ]);
+
+    return redirect()->route('landing')->with('success', 'Bantuan berhasil disimpan!');
+}
+
+public function showInboxForm()
+{
+    $biodata = Biodata::with('bantuan')->get();
+    $komunitas = komunitas::all();
+    $banjar = Banjar::all();
+    $bantuan = Bantuan::all();
+    return view('operatorr.InboxBantuan', compact('biodata', 'banjar','komunitas','bantuan'));
 }
 }

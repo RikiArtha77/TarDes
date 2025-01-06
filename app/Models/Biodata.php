@@ -22,7 +22,7 @@ class Biodata extends Model
         'banjar_id',
         'foto_kk',
         'foto_rumah',
-        'jumlah_keluarga',
+        'jumlah_anggota',
         'latitude',
         'longitude',
     ];
@@ -50,4 +50,10 @@ class Biodata extends Model
     {
         return $this->belongsTo(Banjar::class, 'banjar_id', 'banjar_id');
     }
+
+    public function bantuan()
+    {
+        return $this->belongsTo(Bantuan::class, 'bantuan_id', 'bantuan_id');
+    }
+
 }

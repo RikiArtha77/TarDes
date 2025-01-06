@@ -7,6 +7,7 @@ use App\Http\Middleware\OperatorMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\AjuanBantuanController;
 use Inertia\Inertia;
 
 // Route::get('/', function () {
@@ -27,6 +28,9 @@ Route::post('/operator/login', [OperatorAuthController::class, 'login'])->name('
 Route::get('/operator/register', [OperatorAuthController::class, 'showRegisterForm'])->name('operator.registerForm');
 Route::post('/operator/register', [OperatorAuthController::class, 'register'])->name('operator.register');
 Route::get('/logout', [OperatorAuthController::class, 'logout'])->name('operator.logout');
+Route::get('/operator/bantuan', [OperatorAuthController::class, 'showBantuanForm'])->name('operator.bantuanForm');
+Route::post('/operator/bantuan', [OperatorAuthController::class, 'storeBantuan'])->name('operator.storeBantuan');
+Route::get('/operator/bantuan/form', [OperatorAuthController::class, 'showInboxForm'])->name('inbox_bantuan');
 
 Route::middleware('auth:operator')->group(function () {
     Route::get('/profile', [OperatorAuthController::class, 'showUserProfile'])->name('profil');

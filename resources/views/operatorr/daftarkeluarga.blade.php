@@ -115,7 +115,7 @@
                                 <!-- Aksi -->
                                 <td class="px-6 py-4 text-sm font-medium leading-5 whitespace-no-wrap border-b border-gray-200">
                                     <a href="{{ route('operator.edit', $item->id) }}"  class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    <a href="javascript:void(0);" class="ml-4 text-red-600 hover:text-red-900" onclick="confirmDelete({{ $item->datkel_id }})">Delete</a>
+                                    <a href="javascript:void(0);" class="ml-4 text-red-600 hover:text-red-900" onclick="confirmDelete({{ $item->id }})">Delete</a>
                                 </td>
                             </tr>
                             @endforeach

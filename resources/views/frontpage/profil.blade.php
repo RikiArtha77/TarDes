@@ -1,5 +1,5 @@
 <x-home-layout>
-    <div class="text-gray-800">
+    <div class="text-white">
         <p>Halo, {{ $operator->username }}!</p>
     </div>
     <div class="shadow px-6 py-4 bg-white rounded sm:px-16 sm:py-16 text-black">

@@ -22,6 +22,7 @@
                     @endguest
 
                     @auth('operator')
+                        <li><a href="{{ route('operator.bantuanForm') }}">Bantuan</a></li>
                         <li><span>Halo, {{ Auth::guard('operator')->user()->username }}</span></li>
                         <li><a href="{{ route('profil') }}">Profil</a></li>
                         <li><a href="{{ route('operator.logout') }}">Logout</a></li>
@@ -30,7 +31,7 @@
             </nav>
         </div>
     </header>
-    <container class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+    <container class="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 flex-col">
         {{ $slot }}
     </container>
     <!-- Footer -->

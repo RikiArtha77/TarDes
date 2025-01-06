@@ -114,11 +114,11 @@ class OperatorController extends Controller
     {
         try {
             // Mencari data berdasarkan ID
-            $datkel = Datkel::find($id);
+            $biodata = Biodata::find($id);
 
             // Jika data ditemukan, hapus dan kirimkan respons sukses
-            if ($datkel) {
-                $datkel->delete();
+            if ($biodata) {
+                $biodata->delete();
                 return response()->json([
                     'success' => true,
                     'message' => 'Data berhasil dihapus.'
