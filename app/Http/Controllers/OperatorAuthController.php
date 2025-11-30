@@ -59,7 +59,7 @@ class OperatorAuthController extends Controller
         $request->validate([
             'username' => 'required|unique:operators,username',
             'email' => 'required',
-            'password' => 'required|confirmed|min:8',
+            'password' => 'required|confirmed|min:4',
         ]);
 
         // Create operator with level set to 1 (user by default)

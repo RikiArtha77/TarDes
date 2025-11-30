@@ -7,7 +7,7 @@
             <form action="{{ route('pupdate') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <!-- Hidden input untuk operator_id -->
-                <input type="hidden" name="operator_id" value="{{ Auth::guard('operator')->user()->id }}">
+                <input type="hidden" name="operator_id" value="{{ Auth::guard('operator')->user()->operator_id }}">
             
                 <div class="px-2 py-8 bg-white sm:p-6">
                     <div class="grid grid-cols-6 gap-6">
